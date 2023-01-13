@@ -1,0 +1,34 @@
+@startuml
+
+class User {
+    - _id: string
+    - name: string
+    - email: string
+    - password: string
+    - bugs: Bug[]
+    - created_at: Date
+    - updated_at: Date
+    + getUserById(id: number): User
+    + addBug(bug: Bug): boolean
+    + removeBug(bug: Bug): boolean
+}
+
+class Bug {
+    - _id: string
+    - title: string
+    - description: string
+    - status: string
+    - assignedTo: User
+    - created_by: User
+    - created_at: Date
+    - updated_at: Date
+    + getAllBugs(): Bug[]
+    + getBugById(id: number): Bug
+    + updateBugById(id: number, bug: Bug): boolean
+    + deleteBugById(id: number): boolean
+    + assignTo(user: User): boolean
+}
+
+User "1" -- "0..*" Bug : has
+
+@enduml

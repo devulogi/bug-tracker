@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+      - DEBUG=app:*
+      - DEBUG_PORT=9229
+      - MONGO_URL=mongodb://mongo:27017
+      - MONGO_DB=bugtracker
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+    command: npm run debug
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+      - "27018:27017"
+    volumes:
+      - mongo:/data/db
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+volumes:
+  mongo:
+  redis:

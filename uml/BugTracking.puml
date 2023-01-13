@@ -8,6 +8,7 @@ class User {
     - bugs: Bug[]
     - created_at: Date
     - updated_at: Date
+    + comparePassword(password: string, cb: fn): boolean
     + getUserById(id: number): User
     + addBug(bug: Bug): boolean
     + removeBug(bug: Bug): boolean

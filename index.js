@@ -1,10 +1,18 @@
 const Express = require('express');
-const mongoose = require('mongoose');
-const connection = mongoose.connection;
-const { port, db } = require('./configs');
-const Redis = require('ioredis');
+const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./docs/openapi.yaml');
+
+const { port } = require('./configs');
+const { MongodbService } = require('./services/mongodb');
+const { RedisService } = require('./services/redis');
 
 const app = Express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(morgan('dev'));
+app.use(Express.json());
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello World!!' });
@@ -12,29 +20,6 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Bugtracker app listening at http://localhost:${port}`);
-
-  mongoose.connect(db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
-  connection.on('error', console.error.bind(console, 'connection error:'));
-  connection.once('open', function () {
-    console.log('Connected to MongoDB');
-  });
-
-  const redis = new Redis(process.env.REDIS_URL);
-  redis.on('connect', () => {
-    console.log('Connected to Redis');
-  });
-  redis.on('error', err => {
-    console.log('Error ' + err);
-  });
-  redis.on('disconnect', () => {
-    console.log('Disconnected from Redis');
-  });
-
-  process.on('SIGINT', () => {
-    connection.close(() => {
-      console.log('Mongoose disconnected on app termination');
-      process.exit(0);
-    });
-    redis.disconnect();
-  });
+  MongodbService();
+  RedisService();
 });

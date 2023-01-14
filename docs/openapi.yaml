@@ -16,9 +16,6 @@ paths:
     get:
       description: Get all users
       operationId: getAllUsers
-      responses:
-        200:
-          description: OK
           content:
             application/json:
               schema:
@@ -135,3 +132,4 @@ paths:
                   updated_at:
                     type: string
                     example: 2020-10-30T12:00:00.000Z
+                        example: 2020-10-30T12:00:00.000Z

@@ -16,9 +16,6 @@ paths:
     get:
       description: Get all users
       operationId: getAllUsers
-      responses:
-        200:
-          description: OK
           content:
             application/json:
               schema:

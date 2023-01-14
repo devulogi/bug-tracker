@@ -10,12 +10,61 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /register:
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in Markdown.
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
+  /users:
+    summary: Returns a list of users
+    description: User operations
+    get:
+      description: Get all users
+      operationId: getAllUsers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    _id:
+                      type: string
+                      example: 5f9f1c9b9b9b9b9b9b9b9b9b
+                    username:
+                      type: string
+                      example: jveux89
+                    password:
+                      type: string
+                      example: 5de3884ca729a97bfd30f178c695c134e0196b755133d6252fc42edeba1e7ea971cf2da75a458a6e3b9021ae91799689aa5b180f2857b4480cf557c2649eda58
+                    email:
+                      type: string
+                      example: jveux89@example.com
+                    role:
+                      type: string
+                      example: user
+                    bugs:
+                      type: array
+                      items:
+                        properties:
+                          _id:
+                            type: string
+                            example: 5f9f1c9b9b9b9b9b9b9b9b9b
+                          title:
+                            type: string
+                            example: Bug title
+                          description:
+                            type: string
+                            example: Bug description
+                          status:
+                            type: string
+                            example: open
+                          priority:
+                            type: string
+                            example: low
+                          created_at:
+                            type: string
+                            example: 2020-10-29T12:00:00.000Z
+                          updated_at:
+                              type: string
+                              example: 2020-10-29T12:00:00.000Z
+                    created_at:
+                        type: string
+                        example: 2020-10-30T12:00:00.000Z
+                    updated_at:
+                        type: string
+                        example: 2020-10-30T12:00:00.000Z

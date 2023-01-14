@@ -5,6 +5,7 @@ class User {
     - name: string
     - email: string
     - password: string
+    - role: string
     - bugs: Bug[]
     - created_at: Date
     - updated_at: Date
@@ -20,6 +21,7 @@ class Bug {
     - description: string
     - status: string
     - assignedTo: User
+    - priority: string
     - created_by: User
     - created_at: Date
     - updated_at: Date

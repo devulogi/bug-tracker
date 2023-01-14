@@ -12,8 +12,8 @@ servers:
   - url: http://localhost:8080
 paths:
   /users:
-    summary: Returns a list of users
     description: User operations
+    summary: Returns a list of users
     get:
       description: Get all users
       operationId: getAllUsers
@@ -74,12 +74,13 @@ paths:
                       example: 2020-10-30T12:00:00.000Z
   /users/{id}:
     description: Get a user by id
+    summary: Returns a user by id
     get:
       parameters:
         - in: path
           name: id
           schema:
-            type: number
+            type: string
             example: 5f9f1c9b9b9b9b9b9b9b9b9b
           required: true
           description: Numeric ID of the user to get

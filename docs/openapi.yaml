@@ -6,10 +6,12 @@ info:
 servers:
   - url: 'https://api.example.com'
 paths:
-  /users:
-    get:
+  /register:
+    post:
       summary: Returns a list of users.
       description: Optional extended description in Markdown.
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request

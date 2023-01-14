@@ -22,11 +22,6 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello World!!' });
 });
 
-app.get('/api/v1/users/:id', async (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({ message: 'Hello World!!', userID: id });
-});
-
 app.listen(port, () => {
   console.log(`Bugtracker app listening at http://localhost:${port}`);
   MongodbService();

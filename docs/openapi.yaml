@@ -1,10 +1,14 @@
 openapi: 3.0.1
 info:
-  title: Sample API
-  description: API description in Markdown.
-  version: 1.0.0
+  title: Bugtracker API
+  description: Bugtracker API project for testing purposes only
+  license:
+    name: MIT License (MIT)
+  version: 0.0.1
+  contact:
+    email: devulogijrp.github@gmail.com
 servers:
-  - url: 'https://api.example.com'
+  - url: http://localhost:8080
 paths:
   /register:
     post:

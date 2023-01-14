@@ -1,10 +1,11 @@
 openapi: 3.0.1
 info:
   title: Bugtracker API
-  description: Bugtracker API project for testing purposes only
+  description: Bugtracker API project for demo purposes only
   license:
     name: MIT License (MIT)
-  version: 0.0.1
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
   contact:
     email: devulogijrp.github@gmail.com
 servers:
@@ -16,6 +17,9 @@ paths:
     get:
       description: Get all users
       operationId: getAllUsers
+      responses:
+        200:
+          description: OK
           content:
             application/json:
               schema:
@@ -60,14 +64,14 @@ paths:
                             type: string
                             example: 2020-10-29T12:00:00.000Z
                           updated_at:
-                              type: string
-                              example: 2020-10-29T12:00:00.000Z
+                            type: string
+                            example: 2020-10-29T12:00:00.000Z
                     created_at:
-                        type: string
-                        example: 2020-10-30T12:00:00.000Z
+                      type: string
+                      example: 2020-10-30T12:00:00.000Z
                     updated_at:
-                        type: string
-                        example: 2020-10-30T12:00:00.000Z
+                      type: string
+                      example: 2020-10-30T12:00:00.000Z
   /users/{id}:
     description: Get a user by id
     get:
@@ -131,5 +135,4 @@ paths:
                     example: 2020-10-30T12:00:00.000Z
                   updated_at:
                     type: string
-                    example: 2020-10-30T12:00:00.000Z
-                        example: 2020-10-30T12:00:00.000Z
+                    example: 2020-10-30T12:00:00.000Z\

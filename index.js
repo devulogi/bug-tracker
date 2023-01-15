@@ -9,6 +9,7 @@ const swaggerDocument = YAML.load('./docs/openapi.yaml');
 const { port } = require('./configs');
 const { MongodbService } = require('./services/mongodb');
 const { RedisService } = require('./services/redis');
+const { ErrorHandler } = require('./helpers/ErrorHandler');
 
 const app = Express();
 
@@ -23,17 +24,11 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res, next) => {
-  const error = new Error('Not Found');
-  error.status = 404;
-  next(error);
+  next(ErrorHandler.handle404Error(null, req));
 });
 
 app.use((error, req, res, next) => {
-  res.status(error.status || 500).json({
-    error: {
-      message: error.message,
-    },
-  });
+  res.status(error.statusCode).json(error);
 });
 
 app.listen(port, () => {

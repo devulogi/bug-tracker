@@ -12,12 +12,12 @@ const { RedisService } = require('./services/redis');
 
 const app = Express();
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(Express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello World!!' });
 });
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
   next(error);
 });
 
-app.use((error, req, res) => {
+app.use((error, req, res, next) => {
   res.status(error.status || 500).json({
     error: {
       message: error.message,

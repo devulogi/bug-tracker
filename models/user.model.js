@@ -64,19 +64,46 @@ UserSchema.statics = {
 };
 
 UserSchema.methods = {
+  /**
+   * Compare the passed password with the value in the database. A model method.
+   * @param candidatePassword {String} Password to compare against the stored password
+   * @param cb {Function} A callback that takes two parameters: an error and a boolean
+   */
   comparePassword: function (candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
       if (err) return cb(err);
       cb(null, isMatch);
     });
   },
+  /**
+   * Add a bug to the user's list of bugs and save the user. A model method.
+   * @param bug {Object} The bug to add to the user's list of bugs and save the user
+   */
   addBug: function (bug) {
-    this.bugs.push(bug);
-    this.save();
+    const user = this;
+    user.bugs.push(bug);
+    user.save(err => {
+      if (err) return err;
+      return {
+        status: 200,
+        message: 'Bug added successfully',
+      };
+    });
   },
+  /**
+   * Remove a bug from the user's list of bugs and save the user. A model method.
+   * @param bug {Object} The bug to remove from the user's list of bugs and save the user
+   */
   removeBug: function (bug) {
-    this.bugs.remove(bug);
-    this.save();
+    const user = this;
+    user.bugs.remove(bug);
+    user.save(err => {
+      if (err) return err;
+      return {
+        status: 200,
+        message: 'Bug removed successfully',
+      };
+    });
   },
 };
 

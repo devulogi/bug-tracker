@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Bugtracker API
-  description: Bugtracker API project for demo purposes only
+  description: Bugtracker API project for demo purposes only. This API only supports the most commonly used HTTP status codes. These include 200 (OK), 201 (Created), 400 (Bad Request), 401 (Unauthorized), 403 (Forbidden), 404 (Not Found), and 500 (Internal Server Error). For a full list of HTTP status codes, see [RFC 7231](https://tools.ietf.org/html/rfc7231#section-6).
   license:
     name: MIT License (MIT)
     url: https://opensource.org/licenses/MIT
@@ -13,10 +13,36 @@ servers:
 paths:
   /users:
     description: User operations
-    summary: Returns a list of users
+    post:
+      description: Create a new user
+      operationId: createUser
+      summary: Create a new user
+      requestBody:
+        description: User to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        201:
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
     get:
       description: Get all users
       operationId: getAllUsers
+      summary: Returns a list of users
       responses:
         200:
           description: OK
@@ -24,10 +50,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/users'
+
   /users/{id}:
     description: Get a user by id
     summary: Returns a user by id
     get:
+      description: Get a user by id
+      operationId: getUserById
+      summary: Returns a user by id
       parameters:
         - in: path
           name: id
@@ -43,6 +73,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/user'
+    put:
+      description: Update an existing user by id
+      operationId: updateUser
+      summary: Update an existing user by id
+      requestBody:
+        description: User object that needs to be updated to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+    delete:
+      description: Delete a user by id
+      operationId: deleteUser
+      summary: Delete a user by id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 5f9f1c9b9b9b9b9b9b9b9b9b
+          required: true
+          description: Numeric ID of the user to delete
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        404:
+          description: User not found
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+
 components:
   schemas:
     users:
@@ -147,3 +224,15 @@ components:
         updated_at:
           type: string
           example: 2020-10-29T12:00:00.000Z
+    error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Error message
+        status:
+          type: string
+          example: 500
+        stack:
+          type: string
+          example: Error stack

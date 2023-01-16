@@ -42,6 +42,40 @@ paths:
               operationId: getUserById
               parameters:
                 userId: '$response.body#/_id'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  hint:
+                    type: string
+                    example: >
+                      This is due to a bad request (e.g. malformed syntax, invalid request message framing, or deceptive request routing).
+                      The request could not be understood by the server due to malformed syntax. 
+                      The client SHOULD NOT repeat the request without modifications.
+
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      properties:
+                        field:
+                          type: string
+                          example: email
+                        message:
+                          type: string
+                          example: Email is required
+                  method:
+                    type: string
+                    example: POST
+                  endpoint:
+                    type: string
+                    example: /users
 
   /users/{userId}:
     description: Get a user by id

@@ -53,8 +53,8 @@ UserSchema.pre('save', function (next) {
 });
 
 UserSchema.statics = {
-  getUserByEmail: function (email) {
-    return this.model('User').findOne({ email }, (err, user) => {
+  getUserById: function (id) {
+    return this.findById(id).exec((err, user) => {
       if (err) {
         return err;
       }

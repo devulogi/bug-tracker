@@ -10,6 +10,7 @@ const { port } = require('./configs');
 const { MongodbService } = require('./services/mongodb');
 const { RedisService } = require('./services/redis');
 const { ErrorHandler } = require('./helpers/ErrorHandler');
+const { apiV1Router } = require('./api/v1');
 
 const app = Express();
 
@@ -19,8 +20,11 @@ app.use(cors());
 app.use(Express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Hello World!!' });
+
+app.use('/api/v1', apiV1Router);
+
+app.use('/api/v2', (req, res) => {
+  res.json({ message: 'api version 2' });
 });
 
 app.use((req, res, next) => {

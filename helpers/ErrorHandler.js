@@ -14,7 +14,7 @@ class ErrorHandler extends Error {
     this.hint = statusCodeMessages[status];
     this.errors = error?.errors?.map(err => err.message) || [];
     this.method = request.method || '';
-    this.endpoint = request.path || '';
+    this.endpoint = request.originalUrl || '';
     this.paylaod = request.body || {};
     this.timestamp = new Date().toISOString();
   }

@@ -1,2 +1,6 @@
-GET http://{{host}}
+GET http://{{domain_name}}/{{api-version1}}/register
+Content-Type: application/json
+
+###
+GET http://{{domain_name}}/{{api-version2}}
 Content-Type: application/json

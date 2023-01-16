@@ -12,9 +12,9 @@ servers:
   - url: http://localhost:8080/api/v1
 paths:
   /users:
-    description: User operations
+    description: The users endpoint allows you to create, retrieve, update, and delete users.
     post:
-      description: Create a new user
+      description: Create a new user and return the user object.
       operationId: createUser
       summary: Create a new user
       requestBody:
@@ -30,48 +30,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
-        400:
-          description: Bad request
-        500:
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-    get:
-      description: Get all users
-      operationId: getAllUsers
-      summary: Returns a list of users
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/users'
-        500:
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    example: 5f9f1c9b9b9b9b9b9b9b9b9b
+          links:
+            GetUserByUserId:
+              description: >
+                The `id` value returned in the response can be used as the `id` parameter in `GET /users/{id}`.
+              operationId: getUserById
+              parameters:
+                userId: '$response.body#/_id'
 
-  /users/{id}:
+  /users/{userId}:
     description: Get a user by id
     summary: Returns a user by id
     get:
       description: Get a user by id
       operationId: getUserById
-      summary: Returns a user by id
+      summary: Returns a  user object by id
       parameters:
         - in: path
-          name: id
+          name: userId
           schema:
             type: string
             example: 5f9f1c9b9b9b9b9b9b9b9b9b
           required: true
-          description: Numeric ID of the user to get
+          description: The `id` of the user to retrieve
       responses:
         200:
           description: OK
@@ -79,52 +65,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/user'
-    put:
-      description: Update an existing user by id
-      operationId: updateUser
-      summary: Update an existing user by id
-      requestBody:
-        description: User object that needs to be updated to the store
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/user'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/user'
-    delete:
-      description: Delete a user by id
-      operationId: deleteUser
-      summary: Delete a user by id
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-            example: 5f9f1c9b9b9b9b9b9b9b9b9b
-          required: true
-          description: Numeric ID of the user to delete
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: boolean
-                example: true
-        404:
-          description: User not found
-        500:
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
 
 components:
   schemas:

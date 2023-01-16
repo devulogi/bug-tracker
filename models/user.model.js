@@ -52,7 +52,24 @@ UserSchema.pre('save', function (next) {
   });
 });
 
+/**
+ * @function comparePassword - compares the password entered by the user with the password stored in the database
+ * @param candidatePassword
+ * @param cb
+ */
+UserSchema.methods.comparePassword = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
+
 UserSchema.statics = {
+  /**
+   * Find user by id and return user object if found else return an error
+   * @param id {string} - user id to find user by
+   * @return {Error | this} - error if user not found else user object
+   */
   getUserById: function (id) {
     return this.findById(id).exec((err, user) => {
       if (err) {
@@ -79,7 +96,7 @@ UserSchema.methods = {
    * Add a bug to the user's list of bugs and save the user. A model method.
    * @param bug {Object} The bug to add to the user's list of bugs and save the user
    */
-  addBug: function (bug) {
+  addBugToUserById: function (bug) {
     const user = this;
     user.bugs.push(bug);
     user.save(err => {
@@ -94,7 +111,7 @@ UserSchema.methods = {
    * Remove a bug from the user's list of bugs and save the user. A model method.
    * @param bug {Object} The bug to remove from the user's list of bugs and save the user
    */
-  removeBug: function (bug) {
+  removeBugToUserById: function (bug) {
     const user = this;
     user.bugs.remove(bug);
     user.save(err => {

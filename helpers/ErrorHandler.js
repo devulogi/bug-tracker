@@ -12,7 +12,10 @@ class ErrorHandler extends Error {
     super();
     this.statusCode = status;
     this.hint = statusCodeMessages[status];
-    this.errors = error?.errors?.map(err => err.message) || [];
+    this.errors =
+      (error.errors && Object.keys(error.errors).map(key => error.errors[key].message)) || error.code === 11000
+        ? [error.message]
+        : [];
     this.method = request.method || '';
     this.endpoint = request.originalUrl || '';
     this.paylaod = request.body || {};

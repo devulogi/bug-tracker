@@ -1,12 +1,11 @@
-const registerRouter = require('express').Router();
+const usersRouter = require('express').Router();
 const { createUser } = require('../../controllers/user.controller');
-const { ErrorHandler } = require('../../helpers/ErrorHandler');
 
-registerRouter
+usersRouter
   .route('/')
   .get((req, res) => {
     res.json({ message: 'register route' });
   })
   .post(createUser);
 
-module.exports = { registerRouter };
+module.exports = { usersRouter };

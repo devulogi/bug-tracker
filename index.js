@@ -23,10 +23,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api/v1', apiV1Router);
 
-app.use('/api/v2', (req, res) => {
-  res.json({ message: 'api version 2' });
-});
-
 app.use((req, res, next) => {
   next(ErrorHandler.handle404Error(null, req));
 });

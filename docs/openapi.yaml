@@ -23,7 +23,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the user.
+                  example: jveux89
+                email:
+                  type: string
+                  description: The email of the user.
+                  example: email@example.com
+                password:
+                  type: string
+                  description: The password of the user.
+                  example: averysafepassword
       responses:
         201:
           description: User created
@@ -76,6 +89,17 @@ paths:
                   endpoint:
                     type: string
                     example: /users
+    get:
+      description: Retrieve all users.
+      operationId: getAllUsers
+      summary: Retrieve all users
+      responses:
+        200:
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
 
   /users/{userId}:
     description: Get a user by id

@@ -2,20 +2,27 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+/**
+ * User schema - defines the structure of the user document
+ * @constructor User
+ */
 const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
+    minlength: 6,
     trim: true,
   },
   email: {
     type: String,
     required: true,
+    unique: [true, 'Email already exists'],
     trim: true,
   },
   password: {
     type: String,
     required: true,
+    minlength: 6,
     trim: true,
   },
   bugs: [
@@ -53,75 +60,56 @@ UserSchema.pre('save', function (next) {
 });
 
 /**
- * @function comparePassword - compares the password entered by the user with the password stored in the database
- * @param candidatePassword
- * @param cb
+ * Takes an email and returns a user object if the email exists in the database or null if it does not. A model method.
+ * @param {string} email - The email to search for
+ * @param {function} cb - A callback that takes a user object and an error argument (if an error occurred)
+ * @returns {function} callback - A callback that takes a user object and an error argument (if an error occurred)
  */
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
+UserSchema.static('findByEmail', function (email, cb) {
+  return this.findOne({ email }, (err, user) => {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+});
+
+/**
+ * Compare the passed password with the value in the database. A model method.
+ * @param {string} candidatePassword - The password to compare with the database
+ * @param {function} cb - A callback that takes a boolean argument (true if the passwords match) and an error argument (if an error occurred)
+ * @returns {function} callback - A callback that takes a boolean argument (true if the passwords match) and an error argument (if an error occurred)
+ */
+UserSchema.method('comparePassword', function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) return cb(err);
     cb(null, isMatch);
   });
-};
+});
 
-UserSchema.statics = {
-  /**
-   * Find user by id and return user object if found else return an error
-   * @param id {string} - user id to find user by
-   * @return {Error | this} - error if user not found else user object
-   */
-  getUserById: function (id) {
-    return this.findById(id).exec((err, user) => {
-      if (err) {
-        return err;
-      }
-      return user;
-    });
-  },
-};
+/**
+ * Add a bug to the user's bugs array. A model method.
+ * @param {Object} bug - The id of the bug to add to the user's bugs array
+ * @param {function} cb - A callback that takes an error argument (if an error occurred) and a user object (if the bug was added successfully)
+ * @returns {function} callback - A callback that takes an error argument (if an error occurred) and a user object (if the bug was added successfully)
+ */
+UserSchema.method('addBug', function (bug, cb) {
+  this.bugs.push(bug);
+  return this.save((err, user) => {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+});
 
-UserSchema.methods = {
-  /**
-   * Compare the passed password with the value in the database. A model method.
-   * @param candidatePassword {String} Password to compare against the stored password
-   * @param cb {Function} A callback that takes two parameters: an error and a boolean
-   */
-  comparePassword: function (candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-      if (err) return cb(err);
-      cb(null, isMatch);
-    });
-  },
-  /**
-   * Add a bug to the user's list of bugs and save the user. A model method.
-   * @param bug {Object} The bug to add to the user's list of bugs and save the user
-   */
-  addBugToUserById: function (bug) {
-    const user = this;
-    user.bugs.push(bug);
-    user.save(err => {
-      if (err) return err;
-      return {
-        status: 200,
-        message: 'Bug added successfully',
-      };
-    });
-  },
-  /**
-   * Remove a bug from the user's list of bugs and save the user. A model method.
-   * @param bug {Object} The bug to remove from the user's list of bugs and save the user
-   */
-  removeBugToUserById: function (bug) {
-    const user = this;
-    user.bugs.remove(bug);
-    user.save(err => {
-      if (err) return err;
-      return {
-        status: 200,
-        message: 'Bug removed successfully',
-      };
-    });
-  },
-};
+/**
+ * Remove a bug from the user's bugs array. A model method.
+ * @param {Object} bugId - The id of the bug to remove from the user's bugs array
+ * @param {function} cb - A callback that takes an error argument (if an error occurred) and a user object (if the bug was removed successfully)
+ */
+UserSchema.method('removeBug', function (bugId, cb) {
+  this.bugs.pull(bugId);
+  return this.save((err, user) => {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+});
 
 module.exports = mongoose.model('User', UserSchema);

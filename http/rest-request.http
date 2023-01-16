@@ -1,6 +1,12 @@
-GET http://{{domain_name}}/{{api-version1}}/register
+GET http://{{domain_name}}/{{api-version1}}/users
 Content-Type: application/json
 
 ###
-GET http://{{domain_name}}/{{api-version2}}
+POST http://{{domain_name}}/{{api-version1}}/users
 Content-Type: application/json
+
+{
+  "name": "jveux89",
+  "email": "email@example.com",
+  "password": "averysafepassword"
+}

@@ -50,6 +50,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/users'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
 
   /users/{id}:
     description: Get a user by id
@@ -227,12 +233,23 @@ components:
     error:
       type: object
       properties:
-        message:
-          type: string
-          example: Error message
-        status:
-          type: string
+        statusCode:
+          type: integer
           example: 500
-        stack:
+        hint:
           type: string
-          example: Error stack
+          example: This is a hint for the error
+        errors:
+          type: array
+          items:
+            type: string
+            example: This is an error
+        method:
+          type: string
+          example: GET
+        endpoint:
+          type: string
+          example: /users
+        timestamp:
+          type: string
+          example: 2020-10-29T12:00:00.000Z

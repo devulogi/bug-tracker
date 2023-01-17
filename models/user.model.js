@@ -103,6 +103,7 @@ UserSchema.method('addBug', function (bug, cb) {
  * Remove a bug from the user's bugs array. A model method.
  * @param {Object} bugId - The id of the bug to remove from the user's bugs array
  * @param {function} cb - A callback that takes an error argument (if an error occurred) and a user object (if the bug was removed successfully)
+ * @return {function} callback - A callback that takes an error argument (if an error occurred) and a user object (if the bug was removed successfully)
  */
 UserSchema.method('removeBug', function (bugId, cb) {
   this.bugs.pull(bugId);

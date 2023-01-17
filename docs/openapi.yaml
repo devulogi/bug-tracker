@@ -43,18 +43,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  _id:
-                    type: string
-                    example: 5f9f1c9b9b9b9b9b9b9b9b9b
+                $ref: '#/components/schemas/user'
           links:
             GetUserByUserId:
               description: >
-                The `id` value returned in the response can be used as the `id` parameter in `GET /users/{id}`.
+                The `_id` value returned in the response can be used as the `id` parameter in `GET /users/{id}`.
               operationId: getUserById
               parameters:
-                userId: '$response.body#/_id'
+                id: '$response.body#/_id'
         400:
           description: Bad request
           content:

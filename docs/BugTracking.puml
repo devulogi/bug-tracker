@@ -1,5 +1,7 @@
 @startuml
 
+title Bug tracker model diagram
+
 class User {
     - _id: string
     - name: string
@@ -32,6 +34,20 @@ class Bug {
     + assignTo(user: User): boolean
 }
 
+class Project {
+    - _id: string
+    - name: string
+    - description: string
+    - bugs: Bug[]
+    - created_at: Date
+    - updated_at: Date
+    + getAllProjects(): Project[]
+    + getProjectById(id: number): Project
+}
+
 User "1" -- "0..*" Bug : has
+
+Project "1" -- "1..*" Bug : has
+
 
 @enduml

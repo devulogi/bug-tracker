@@ -6,7 +6,7 @@ const createUser = async (req, res, next) => {
     if (err) {
       next(ErrorHandler.handle400Error(err, req));
     } else {
-      res.status(201).json({ _id: user._id });
+      res.status(201).json(user);
     }
   });
 };

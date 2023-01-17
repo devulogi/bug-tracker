@@ -2,11 +2,11 @@
   "name": "bug-tracking",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "debug": "nodemon --inspect=0.0.0.0:9229 index.js",
-    "start:dev": "nodemon index.js",
+    "start": "node server.js",
+    "debug": "nodemon --inspect=0.0.0.0:9229 server.js",
+    "start:dev": "nodemon server.js",
     "prepare": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

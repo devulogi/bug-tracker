@@ -97,7 +97,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/users'
 
-  /users/{userId}:
+  /users/{id}:
     description: Get a user by id
     summary: Returns a user by id
     get:

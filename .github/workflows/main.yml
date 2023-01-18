@@ -10,3 +10,9 @@ on:
         description: 'Why are you running this workflow manually?'
         required: true
         default: 'I am running tests before implementing an automated workflow'
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send username and reason
+        run: echo "{{ github.event.inputs.username }}, {{ github.event.inputs.reason }}"

@@ -14,7 +14,6 @@ jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-      - name: Send username and reason
       - run: >
-         echo "user ${{ github.event.inputs.username }}"
-         echo "because ${{ github.event.inputs.reason }}"
+          echo "User ${{ github.event.inputs.username }}"
+          echo "Because ${{ github.event.inputs.reason }}"

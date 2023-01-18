@@ -20,4 +20,4 @@ jobs:
     steps:
       - name: test
         run:
-          echo "User ${{ github.event.inputs.username }}. Because ${{ github.event.inputs.reason }}."
+          echo "User ${{ github.event.inputs.username }}. Because ${{ github.event.inputs.reason }} ${{ github.event.inputs.emoji }}."

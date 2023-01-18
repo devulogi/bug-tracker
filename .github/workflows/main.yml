@@ -15,6 +15,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-      - run:  >
+        run:
           echo "User ${{ github.event.inputs.username }}. Because ${{ github.event.inputs.reason }}."
-          echo "Yuddee sota"

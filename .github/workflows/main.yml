@@ -6,6 +6,10 @@ on:
       username:
         description: 'Your GitHub username'
         required: true
+      emoji:
+        description: 'Emoji to include in the greeting'
+        required: false
+        default: '👋'
       reason:
         description: 'Why are you running this workflow manually?'
         required: true

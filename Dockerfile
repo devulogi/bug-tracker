@@ -1,6 +1,6 @@
 FROM node:19-alpine
 WORKDIR /app
-COPY package.json .
+COPY package.json app
 RUN npm install
-COPY . .
+COPY . /app --exclude-from=.dockerignore
 CMD ["npm", "run", "start:dev"]

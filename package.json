@@ -8,6 +8,7 @@
     "debug": "nodemon --inspect=0.0.0.0:9229 server.js",
     "start:dev": "nodemon server.js",
     "prepare": "husky install",
+    "test": "nodemon --exec 'mocha -R min'",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

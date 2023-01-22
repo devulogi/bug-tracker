@@ -24,7 +24,9 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', apiV1Router);
 
 app.use((req, res, next) => {
-  next(ErrorHandler.handle404Error(null, req));
+  const error = new Error('Not Found');
+  error.status = 404;
+  next(ErrorHandler.handle404Error(error, req));
 });
 
 app.use((error, req, res, next) => {

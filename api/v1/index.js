@@ -4,8 +4,4 @@ const { ErrorHandler } = require('../../helpers/ErrorHandler');
 
 apiV1Router.use('/users', usersRouter);
 
-apiV1Router.use((req, res, next) => {
-  next(ErrorHandler.handle404Error(null, req));
-});
-
 module.exports = { apiV1Router };

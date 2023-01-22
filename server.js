@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(Express.json());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api/v1', apiV1Router);
 

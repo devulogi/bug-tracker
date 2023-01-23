@@ -106,7 +106,7 @@ paths:
       summary: Returns a  user object by id
       parameters:
         - in: path
-          name: userId
+          name: id
           schema:
             type: string
             example: 5f9f1c9b9b9b9b9b9b9b9b9b

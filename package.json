@@ -41,7 +41,8 @@
   },
   "lint-staged": {
     "*.js": [
-      "format:fix"
+      "eslint . --no-error-on-unmatched-pattern",
+      "prettier -- --check --ignore-unknown"
     ]
   }
 }

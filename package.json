@@ -42,7 +42,7 @@
   "lint-staged": {
     "*.js": [
       "eslint . --no-error-on-unmatched-pattern",
-      "prettier -- --check --ignore-unknown"
+      "prettier --write --ignore-unknown"
     ]
   }
 }
